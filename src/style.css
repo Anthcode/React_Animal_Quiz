@@ -88,6 +88,10 @@ h2 {
   flex-wrap: wrap;
   flex: 0.8;
 }
+.btn-alphabet:active {
+  scale: 0.9;
+}
+
 .btn-alphabet {
   margin: 2px;
   border: 1px solid black;
@@ -103,8 +107,9 @@ h2 {
   margin: 2px;
   border: 1px solid black;
   font-family: monospace;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
+  scale: 0.8;
 }
 .win {
   height: 50px;
