@@ -1,4 +1,4 @@
-const ANIMAL_LIST = [
+export const ANIMAL_LIST = [
   'Aardvark',
   'Albatross',
   'Alligator',
@@ -224,4 +224,3 @@ const ANIMAL_LIST = [
   'Yak',
   'Zebra',
 ];
-export { ANIMAL_LIST };
