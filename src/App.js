@@ -10,6 +10,7 @@ export default function App() {
   const [lives, setLives] = useState(6);
   const [passwd, setPasswd] = useState('');
   const [reset, setReset] = useState(false);
+  const [winCount, setwinCount] = useState(0)
 
   const RandomPasswd = () => {
     const random = Math.floor(Math.random() * ANIMAL_LIST.length);
