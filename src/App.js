@@ -10,7 +10,7 @@ export default function App() {
   const [lives, setLives] = useState(6);
   const [passwd, setPasswd] = useState('');
   const [reset, setReset] = useState(false);
-  const [winCount, setwinCount] = useState(0)
+  const [scoreCount, setScoreCount] = useState(0)
 
   const RandomPasswd = () => {
     const random = Math.floor(Math.random() * ANIMAL_LIST.length);
@@ -23,6 +23,7 @@ export default function App() {
   }, [reset]);
 
   const handleClick = (e) => {
+   
     if (passwd.includes(e)) {
       setQuessedLetters([...quessedLetters, e]);
     } else {
@@ -37,20 +38,31 @@ export default function App() {
   const lose = bad.length >= 6;
   
   const restart = () => {
+    if (win) {
+      setScoreCount(scoreCount+1)
+    
+      setQuessedLetters([]);
+      setReset(!reset);
+    }else {
     setLives(6);
+    setScoreCount(0);
     setBad([]);
     setQuessedLetters([]);
     setReset(!reset);
     win: false;
     lose: false;
+    }
   };
 
   return (
     <div className="App">
       <h1>Animal Name Quiz</h1>
       <div className="lives">
-        <span className="span-lives">
+      <span className="span-lives">
           Lives : <span className="lives-num">{lives}</span>
+        </span>
+        <span className="span-lives">
+          Score : <span className="score-num">{scoreCount}</span>
         </span>
       </div>
       <div className="win">
