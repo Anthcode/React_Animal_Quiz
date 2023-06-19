@@ -1,36 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import {ANIMAL_LIST}  from '../src/db/db';
+import {ANIMAL_LIST, ALPHABET}  from '../src/db/db';
 
 export default function App() {
-  const ALPHABET = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
-  ];
+  
 
   const [quessedLetters, setQuessedLetters] = useState([]);
   const [bad, setBad] = useState([]);
