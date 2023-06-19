@@ -6,10 +6,7 @@ export default function App() {
   const [quessedLetters, setQuessedLetters] = useState([]);
   const [bad, setBad] = useState([]);
   const [lives, setLives] = useState(6);
-
-  const [reset, setReset] = useState(false);
   const [scoreCount, setScoreCount] = useState(0);
-
   const [passwd, setPasswd] = useState(() => {
     const random = Math.floor(Math.random() * ANIMAL_LIST.length);
     return ANIMAL_LIST[random].toUpperCase();
