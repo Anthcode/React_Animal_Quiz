@@ -15,53 +15,43 @@ export default function App() {
     return ANIMAL_LIST[random].toUpperCase();
   });
 
-
-
-  useEffect(()=>{
-    console.log(passwd)
-  },[])
+  useEffect(() => {
+    console.log(passwd);
+  }, []);
 
   const handleClick = (e) => {
-    if (lives===0){
-      lose=true;
-      win=false;
-    }else
-    if (passwd.includes(e)) {
+    if (lives === 0) {
+      lose = true;
+      win = false;
+    } else if (passwd.includes(e)) {
       setQuessedLetters([...quessedLetters, e]);
     } else {
       setBad([...bad, e]);
-      setLives(lives - 1)
-    } 
+      setLives(lives - 1);
+    }
   };
 
-let win = passwd
-    .split('')
-    .every((letter) => quessedLetters.includes(letter));
- let lose = lives ===0;
+  let win = passwd.split('').every((letter) => quessedLetters.includes(letter));
+  let lose = lives === 0;
 
   const restart = () => {
     const random = Math.floor(Math.random() * ANIMAL_LIST.length);
     setPasswd(ANIMAL_LIST[random].toUpperCase());
     if (win) {
-      
       setScoreCount(scoreCount + 1);
       setQuessedLetters([]);
       setBad([]);
-   
     } else {
-          
-            setLives(6);
-            setScoreCount(0);
-            setBad([]);
-            setQuessedLetters([]);
-       
-         
+      setLives(6);
+      setScoreCount(0);
+      setBad([]);
+      setQuessedLetters([]);
     }
   };
- 
+
   return (
     <div className="App">
-       <h1>Animal Name Quiz</h1>
+      <h1>Animal Name Quiz</h1>
       <div className="lives">
         <span className="span-lives">
           Lives : <span className="lives-num">{lives}</span>
@@ -119,7 +109,7 @@ let win = passwd
         <button className="restart" onClick={restart}>
           Restart
         </button>
-      </div> 
+      </div>
     </div>
   );
 }
