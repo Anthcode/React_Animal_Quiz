@@ -7,14 +7,28 @@ export default function App() {
   const [bad, setBad] = useState([]);
   const [lives, setLives] = useState(6);
   const [scoreCount, setScoreCount] = useState(0);
-  const [passwd, setPasswd] = useState(() => {
-    const random = Math.floor(Math.random() * ANIMAL_LIST.length);
-    return ANIMAL_LIST[random].toUpperCase();
-  });
+  const [passwd, setPasswd] = useState('');
+  const [reset, setReset] = useState(false);
 
-  useEffect(() => {
-    console.log(passwd);
-  }, []);
+  
+  const score = {
+    score : scoreCount,
+    user : 'grich'
+  }
+
+
+  const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+
+
+    useEffect(() => {
+  
+      const RandomPasswd = () => {
+        const random = Math.floor(Math.random() * ANIMAL_LIST.length);
+        setPasswd(ANIMAL_LIST[random].toUpperCase());
+        console.log('random pass', ANIMAL_LIST[random]);
+      };
+      RandomPasswd();
+    },[reset]);
 
   const handleClick = (e) => {
     if (lives === 0) {
@@ -32,18 +46,18 @@ export default function App() {
   let lose = lives === 0;
 
   const restart = () => {
-    const random = Math.floor(Math.random() * ANIMAL_LIST.length);
-    setPasswd(ANIMAL_LIST[random].toUpperCase());
     if (win) {
       setScoreCount(scoreCount + 1);
       setQuessedLetters([]);
       setBad([]);
     } else {
       setLives(6);
+      localStorage.setItem('highScores',JSON.stringify(score));
       setScoreCount(0);
       setBad([]);
       setQuessedLetters([]);
     }
+    setReset(!reset);
   };
 
   return (
