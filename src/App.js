@@ -38,13 +38,15 @@ export default function App() {
   const [passwd, setPasswd] = useState('');
   const [reset, setReset] = useState(false);
 
-  const RandomPasswd = () => {
-    const random = Math.floor(Math.random() * ANIMAL_LIST.length);
-    setPasswd(ANIMAL_LIST[random].toUpperCase());
-    console.log(random, ANIMAL_LIST[random]);
-  };
+ 
 
   useEffect(() => {
+    const RandomPasswd = () => {
+      const random = Math.floor(Math.random() * ANIMAL_LIST.length);
+      setPasswd(ANIMAL_LIST[random].toUpperCase());
+      console.log(random, ANIMAL_LIST[random]);
+    };
+
     RandomPasswd();
   }, [reset]);
 
