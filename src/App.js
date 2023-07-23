@@ -45,14 +45,21 @@ export default function App() {
   let win = passwd.split('').every((letter) => quessedLetters.includes(letter));
   let lose = lives === 0;
 
+  const checkBestScore = ()=>{
+    console.log(highScores.score );
+    if (scoreCount > highScores.score){
+    localStorage.setItem('highScores',JSON.stringify(score))
+    }else return;
+  }
+
   const restart = () => {
     if (win) {
       setScoreCount(scoreCount + 1);
       setQuessedLetters([]);
       setBad([]);
     } else {
+      checkBestScore();
       setLives(6);
-      localStorage.setItem('highScores',JSON.stringify(score));
       setScoreCount(0);
       setBad([]);
       setQuessedLetters([]);
