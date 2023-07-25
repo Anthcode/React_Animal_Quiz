@@ -1,57 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import {ANIMAL_LIST}  from '../src/db/db';
+import { ANIMAL_LIST, ALPHABET } from '../src/db/db';
 
 export default function App() {
-  const ALPHABET = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'V',
-    'W',
-    'X',
-    'Y',
-    'Z',
-  ];
-
   const [quessedLetters, setQuessedLetters] = useState([]);
   const [bad, setBad] = useState([]);
   const [lives, setLives] = useState(6);
+  const [scoreCount, setScoreCount] = useState(0);
   const [passwd, setPasswd] = useState('');
   const [reset, setReset] = useState(false);
+  const [highScores, setHighScores] = useState(JSON.parse(localStorage.getItem('highScores'))|| false);
 
- 
+  
+  
+    useEffect(() => {
+      localStorage.setItem('highScores',JSON.stringify(highScores))
+    
+     if(highScores){
+      setHighScores(highScores)
+     }
+    },[])
 
-  useEffect(() => {
-    const RandomPasswd = () => {
-      const random = Math.floor(Math.random() * ANIMAL_LIST.length);
-      setPasswd(ANIMAL_LIST[random].toUpperCase());
-      console.log(random, ANIMAL_LIST[random]);
-    };
+  
 
-    RandomPasswd();
-  }, [reset]);
+
+    useEffect(() => {
+      const RandomPasswd = () => {
+        const random = Math.floor(Math.random() * ANIMAL_LIST.length);
+        setPasswd(ANIMAL_LIST[random].toUpperCase());
+        console.log('random pass', ANIMAL_LIST[random]);
+      };
+    
+      RandomPasswd();
+    },[reset]);
 
   const handleClick = (e) => {
-    if (passwd.includes(e)) {
+    if (lives === 0) {
+      lose = true;
+      win = false;
+    } else if (passwd.includes(e)) {
       setQuessedLetters([...quessedLetters, e]);
     } else {
       setBad([...bad, e]);
@@ -59,28 +46,45 @@ export default function App() {
     }
   };
 
-  const win = passwd
-    .split('')
-    .every((letter) => quessedLetters.includes(letter));
-  const lose = bad.length >= 6;
-  
+  let win = passwd.split('').every((letter) => quessedLetters.includes(letter));
+  let lose = lives === 0;
+
+  const checkBestScore = ()=>{
+    console.log(highScores);
+    if (scoreCount > highScores){
+    localStorage.setItem('highScores',JSON.stringify(scoreCount))
+    }else return;
+  }
+
   const restart = () => {
-    setLives(6);
-    setBad([]);
-    setQuessedLetters([]);
+    if (win) {
+      setScoreCount(scoreCount + 1);
+      setQuessedLetters([]);
+      setBad([]);
+      checkBestScore();
+    } else {
+      checkBestScore();
+      setLives(6);
+      setScoreCount(0);
+      setBad([]);
+      setQuessedLetters([]);
+    }
     setReset(!reset);
-    win: false;
-    lose: false;
   };
 
   return (
     <div className="App">
+      <div className="lastBestScore">Your Best Score : {highScores}</div>
       <h1>Animal Name Quiz</h1>
       <div className="lives">
         <span className="span-lives">
           Lives : <span className="lives-num">{lives}</span>
         </span>
+        <span className="span-lives">
+          Score : <span className="score-num">{scoreCount}</span>
+        </span>
       </div>
+      
       <div className="win">
         {win && <h2>WIN !!!</h2>}
         {lose && <h2>LOSE :(</h2>}
@@ -128,7 +132,7 @@ export default function App() {
       </div>
       <div className={win || lose ? 'restart-div' : 'restart-div-hide'}>
         <button className="restart" onClick={restart}>
-          Restart
+          {win? 'Next' : 'Restart'}
         </button>
       </div>
     </div>
