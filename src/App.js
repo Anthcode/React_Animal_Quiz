@@ -9,24 +9,28 @@ export default function App() {
   const [scoreCount, setScoreCount] = useState(0);
   const [passwd, setPasswd] = useState('');
   const [reset, setReset] = useState(false);
+  const [highScores, setHighScores] = useState(JSON.parse(localStorage.getItem('highScores'))|| false);
 
   
-  const score = {
-    score : scoreCount,
-    user : 'grich'
-  }
+  
+    useEffect(() => {
+      localStorage.setItem('highScores',JSON.stringify(highScores))
+    
+     if(highScores){
+      setHighScores(highScores)
+     }
+    },[])
 
-
-  const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
+  
 
 
     useEffect(() => {
-  
       const RandomPasswd = () => {
         const random = Math.floor(Math.random() * ANIMAL_LIST.length);
         setPasswd(ANIMAL_LIST[random].toUpperCase());
         console.log('random pass', ANIMAL_LIST[random]);
       };
+    
       RandomPasswd();
     },[reset]);
 
@@ -46,9 +50,9 @@ export default function App() {
   let lose = lives === 0;
 
   const checkBestScore = ()=>{
-    console.log(highScores.score );
-    if (scoreCount > highScores.score){
-    localStorage.setItem('highScores',JSON.stringify(score))
+    console.log(highScores);
+    if (scoreCount > highScores){
+    localStorage.setItem('highScores',JSON.stringify(scoreCount))
     }else return;
   }
 
@@ -57,6 +61,7 @@ export default function App() {
       setScoreCount(scoreCount + 1);
       setQuessedLetters([]);
       setBad([]);
+      checkBestScore();
     } else {
       checkBestScore();
       setLives(6);
@@ -69,6 +74,7 @@ export default function App() {
 
   return (
     <div className="App">
+      <div className="lastBestScore">Your Best Score : {highScores}</div>
       <h1>Animal Name Quiz</h1>
       <div className="lives">
         <span className="span-lives">
@@ -78,6 +84,7 @@ export default function App() {
           Score : <span className="score-num">{scoreCount}</span>
         </span>
       </div>
+      
       <div className="win">
         {win && <h2>WIN !!!</h2>}
         {lose && <h2>LOSE :(</h2>}
@@ -125,7 +132,7 @@ export default function App() {
       </div>
       <div className={win || lose ? 'restart-div' : 'restart-div-hide'}>
         <button className="restart" onClick={restart}>
-          Restart
+          {win? 'Next' : 'Restart'}
         </button>
       </div>
     </div>

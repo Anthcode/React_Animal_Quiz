@@ -31,7 +31,7 @@ body {
   width: 440px;
   min-width: 340px;
   min-height: 400px;
-  max-height: 400px;
+  padding: 0 14px;
   border: 1px solid black;
   border-radius: 8px;
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
@@ -68,7 +68,8 @@ h1 {
   font-family: monospace;
   gap: 0.7em;
   margin: 5px 5px;
-  min-width: 360px;
+ 
+  
 }
 
 h2 {
@@ -127,10 +128,11 @@ h2 {
   visibility: visible;
   display: flex;
   justify-content: center;
-  flex: 0.2;
+  padding: 14px 10px;
 }
 .restart {
   justify-content: center;
+ 
   margin: auto 0;
   color: blue;
   font-size: 0.6em;
@@ -149,6 +151,13 @@ h2 {
   color: white;
   animation-play-state: paused;
 }
+.lastBestScore{
+  display: flex;
+  justify-content: flex-end;
+  padding: 18px;
+  font-size: .5em; color: rgb(32, 30, 30);
+  width: 100%;
+}
 
 @keyframes reset {
   0% {
@@ -160,4 +169,11 @@ h2 {
   100% {
     opacity: 0.5;
   }
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+span{
+  font-size: 0.8em;
+}
 }
