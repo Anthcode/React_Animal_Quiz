@@ -10,6 +10,8 @@ export default function App() {
   const [passwd, setPasswd] = useState('');
   const [reset, setReset] = useState(false);
   const [highScores, setHighScores] = useState(JSON.parse(localStorage.getItem('highScores'))|| false);
+  let win = passwd.split('').every((letter) => quessedLetters.includes(letter));
+  let lose = lives === 0;
 
   
   
@@ -21,21 +23,29 @@ export default function App() {
      }
     },[])
 
-  
-
-
     useEffect(() => {
       const RandomPasswd = () => {
         const random = Math.floor(Math.random() * ANIMAL_LIST.length);
         setPasswd(ANIMAL_LIST[random].toUpperCase());
         console.log('random pass', ANIMAL_LIST[random]);
       };
-    
+      checkBestScore();
       RandomPasswd();
     },[reset]);
 
+
+   const checkBestScore = ()=>{
+    console.log(highScores);
+    if (scoreCount > highScores){
+    setHighScores(scoreCount)  
+    localStorage.setItem('highScores',JSON.stringify(scoreCount))
+    }else return;
+  }  
+
+
   const handleClick = (e) => {
     if (lives === 0) {
+      checkBestScore();
       lose = true;
       win = false;
     } else if (passwd.includes(e)) {
@@ -46,35 +56,25 @@ export default function App() {
     }
   };
 
-  let win = passwd.split('').every((letter) => quessedLetters.includes(letter));
-  let lose = lives === 0;
-
-  const checkBestScore = ()=>{
-    console.log(highScores);
-    if (scoreCount > highScores){
-    localStorage.setItem('highScores',JSON.stringify(scoreCount))
-    }else return;
+  const next =()=>{
+    setScoreCount(scoreCount+1)
+    setQuessedLetters([]);
+    setBad([]);
+    setReset(!reset);
   }
 
   const restart = () => {
-    if (win) {
-      setScoreCount(scoreCount + 1);
-      setQuessedLetters([]);
-      setBad([]);
-      checkBestScore();
-    } else {
-      checkBestScore();
-      setLives(6);
-      setScoreCount(0);
-      setBad([]);
-      setQuessedLetters([]);
-    }
+    setLives(6);
+    setScoreCount(0);
+    setBad([]);
+    setQuessedLetters([]);
     setReset(!reset);
   };
 
   return (
     <div className="App">
-      <div className="lastBestScore">Your Best Score : {highScores}</div>
+      {highScores&&
+      <div className="lastBestScore">Your Best Score : {highScores}</div>}
       <h1>Animal Name Quiz</h1>
       <div className="lives">
         <span className="span-lives">
@@ -131,9 +131,11 @@ export default function App() {
         ))}
       </div>
       <div className={win || lose ? 'restart-div' : 'restart-div-hide'}>
-        <button className="restart" onClick={restart}>
-          {win? 'Next' : 'Restart'}
-        </button>
+       
+          {win?
+          <button className="restart" onClick={next}>'Next' </button>
+          :
+          <button className="restart" onClick={restart}>'Restart'</button>}
       </div>
     </div>
   );
