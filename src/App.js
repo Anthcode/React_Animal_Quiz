@@ -1,95 +1,88 @@
-import React, { useState, useEffect } from 'react';
-import './style.css';
-import { ANIMAL_LIST, ALPHABET } from '../src/db/db';
+import React, { useState, useEffect } from 'react'
+import './style.css'
+import { ANIMAL_LIST, ALPHABET } from '../src/db/db'
 
-export default function App() {
-  const [quessedLetters, setQuessedLetters] = useState([]);
-  const [bad, setBad] = useState([]);
-  const [lives, setLives] = useState(6);
-  const [scoreCount, setScoreCount] = useState(0);
-  const [passwd, setPasswd] = useState('');
-  const [reset, setReset] = useState(false);
-  const [highScores, setHighScores] = useState(JSON.parse(localStorage.getItem('highScores'))|| false);
-  let win = passwd.split('').every((letter) => quessedLetters.includes(letter));
-  let lose = lives === 0;
+export default function App () {
+  const [quessedLetters, setQuessedLetters] = useState([])
+  const [bad, setBad] = useState([])
+  const [lives, setLives] = useState(6)
+  const [scoreCount, setScoreCount] = useState(0)
+  const [passwd, setPasswd] = useState('')
+  const [reset, setReset] = useState(false)
+  const [highScores, setHighScores] = useState(JSON.parse(localStorage.getItem('highScores')) || false)
+  let win = passwd.split('').every(letter => quessedLetters.includes(letter))
+  let lose = lives === 0
 
-  
-  
-    useEffect(() => {
-      localStorage.setItem('highScores',JSON.stringify(highScores))
-    
-     if(highScores){
+  useEffect(() => {
+    localStorage.setItem('highScores', JSON.stringify(highScores))
+    if (highScores) {
       setHighScores(highScores)
-     }
-    },[])
-
-    useEffect(() => {
-      const RandomPasswd = () => {
-        const random = Math.floor(Math.random() * ANIMAL_LIST.length);
-        setPasswd(ANIMAL_LIST[random].toUpperCase());
-        console.log('random pass', ANIMAL_LIST[random]);
-      };
-      checkBestScore();
-      RandomPasswd();
-    },[reset]);
-
-
-   const checkBestScore = ()=>{
-    console.log(highScores);
-    if (scoreCount > highScores){
-    setHighScores(scoreCount)  
-    localStorage.setItem('highScores',JSON.stringify(scoreCount))
-    }else return;
-  }  
-
-
-  const handleClick = (e) => {
-    if (lives === 0) {
-      checkBestScore();
-      lose = true;
-      win = false;
-    } else if (passwd.includes(e)) {
-      setQuessedLetters([...quessedLetters, e]);
-    } else {
-      setBad([...bad, e]);
-      setLives(lives - 1);
     }
-  };
+  }, [])
 
-  const next =()=>{
-    setScoreCount(scoreCount+1)
-    setQuessedLetters([]);
-    setBad([]);
-    setReset(!reset);
+  useEffect(() => {
+    const RandomPasswd = () => {
+      const random = Math.floor(Math.random() * ANIMAL_LIST.length)
+      setPasswd(ANIMAL_LIST[random].toUpperCase())
+    }
+    checkBestScore()
+    RandomPasswd()
+  }, [reset])
+
+  const checkBestScore = () => {
+    if (scoreCount > highScores) {
+      setHighScores(scoreCount)
+      localStorage.setItem('highScores', JSON.stringify(scoreCount))
+    } else return
+  }
+
+  const handleClick = e => {
+    if (lives === 0) {
+      checkBestScore()
+      lose = true
+      win = false
+    } else if (passwd.includes(e)) {
+      setQuessedLetters([...quessedLetters, e])
+    } else {
+      setBad([...bad, e])
+      setLives(lives - 1)
+    }
+  }
+
+  const next = () => {
+    setScoreCount(scoreCount + 1)
+    setQuessedLetters([])
+    setBad([])
+    setReset(!reset)
   }
 
   const restart = () => {
-    setLives(6);
-    setScoreCount(0);
-    setBad([]);
-    setQuessedLetters([]);
-    setReset(!reset);
-  };
-
+    setLives(6)
+    setScoreCount(0)
+    setBad([])
+    setQuessedLetters([])
+    setReset(!reset)
+  }
   return (
-    <div className="App">
-      {highScores&&
-      <div className="lastBestScore">Your Best Score : {highScores}</div>}
+    <div className='App'>
+      {highScores && (
+        <div className='lastBestScore'>Your Best Score : {highScores}</div>
+      )}
       <h1>Animal Name Quiz</h1>
-      <div className="lives">
-        <span className="span-lives">
-          Lives : <span className="lives-num">{lives}</span>
+      <div className='lives'>
+        <span className='span-lives'>
+          Lives : <span className='lives-num'>{lives}</span>
         </span>
-        <span className="span-lives">
-          Score : <span className="score-num">{scoreCount}</span>
+        <span className='span-lives'>
+          Score : <span className='score-num'>{scoreCount}</span>
         </span>
       </div>
-      
-      <div className="win">
+
+      <div className='win'>
         {win && <h2>WIN !!!</h2>}
         {lose && <h2>LOSE :(</h2>}
       </div>
-      <div className="passwd">
+      <div className='passwd'>
         {passwd.split('').map((letter, idx) => (
           <span key={idx} style={{ borderBottom: '.1em solid black' }}>
             <span
@@ -98,7 +91,7 @@ export default function App() {
                 color:
                   !quessedLetters.includes(letter) && lose
                     ? 'firebrick'
-                    : 'black',
+                    : 'black'
               }}
             >
               {letter}
@@ -107,7 +100,7 @@ export default function App() {
         ))}
       </div>
       <div className={win || lose ? 'alphabet-hide' : 'alphabet'}>
-        {ALPHABET.map((letter) => (
+        {ALPHABET.map(letter => (
           <button
             className={
               quessedLetters.includes(letter)
@@ -124,19 +117,23 @@ export default function App() {
             }
             key={letter}
             id={letter}
-            onClick={(e) => handleClick(e.currentTarget.id)}
+            onClick={e => handleClick(e.currentTarget.id)}
           >
             {letter}
           </button>
         ))}
       </div>
       <div className={win || lose ? 'restart-div' : 'restart-div-hide'}>
-       
-          {win?
-          <button className="restart" onClick={next}>'Next' </button>
-          :
-          <button className="restart" onClick={restart}>'Restart'</button>}
+        {win ? (
+          <button className='restart' onClick={next}>
+            'Next'{' '}
+          </button>
+        ) : (
+          <button className='restart' onClick={restart}>
+            'Restart'
+          </button>
+        )}
       </div>
     </div>
-  );
+  )
 }

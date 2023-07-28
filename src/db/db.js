@@ -168,14 +168,11 @@ export const ANIMAL_LIST = [
   'Ram',
   'Rat',
   'Raven',
-  'Red deer',
-  'Red panda',
   'Reindeer',
   'Rhinoceros',
   'Rook',
   'Salamander',
   'Salmon',
-  'Sand Dollar',
   'Sandpiper',
   'Sardine',
   'Scorpion',
@@ -222,8 +219,8 @@ export const ANIMAL_LIST = [
   'Worm',
   'Wren',
   'Yak',
-  'Zebra',
-];
+  'Zebra'
+]
 export const ALPHABET = [
   'A',
   'B',
@@ -250,5 +247,5 @@ export const ALPHABET = [
   'W',
   'X',
   'Y',
-  'Z',
-];
+  'Z'
+]
