@@ -132,11 +132,15 @@ export default function App() {
         ))}
       </div>
       <div className={win || lose ? 'alphabet-hide' : 'alphabet'}>
-        {ALPHABET.map((letter, idx) => (
+        {ALPHABET.map((letter, idx) =>
+
+       
+         (
           <motion.button
-            initial={{ x: '100vw', opacity: 0, scale: 0, y: '-100vh' }}
-            animate={{ x: 0, y: 0, opacity: 1, scale: 1 }}
-            transition={{ duration: idx * 0.1 }}
+            initial={{ x: '100vw', opacity: 0, scale: 0, y: '-100vh',rotate:180 }}
+            animate={{ x: 0, y: 0, opacity: 1, scale: 1, rotate:0 }}
+           // transition={{ duration: idx * 0.1 }}
+           transition={{ duration: (Math.random()*2)+1 }}
             className={
               quessedLetters.includes(letter)
                 ? 'btn-alphabet-quest'
