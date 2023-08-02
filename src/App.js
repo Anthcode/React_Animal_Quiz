@@ -73,11 +73,12 @@ export default function App() {
     setReset(!reset);
   };
   return (
-    <motion.div className="App"
-    initial={{opacity: 0 }}
-    animate={{opacity: 1 }}
-    transition={{duration:1.1}}
-      >
+    <motion.div
+      className="App"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.1 }}
+    >
       {highScores && (
         <div className="lastBestScore">Your Best Score : {highScores}</div>
       )}
@@ -129,8 +130,12 @@ export default function App() {
         ))}
       </div>
       <div className={win || lose ? 'alphabet-hide' : 'alphabet'}>
-        {ALPHABET.map((letter) => (
-          <button
+        {ALPHABET.map((letter, idx) => (
+          <motion.button
+            key={idx}
+            initial={{ x: '100vw', opacity: 0, scale: 0, y: '-100vh' }}
+            animate={{ x: 0, y: 0, opacity: 1, scale: 1 }}
+            transition={{ duration: idx * 0.1 }}
             className={
               quessedLetters.includes(letter)
                 ? 'btn-alphabet-quest'
@@ -149,7 +154,7 @@ export default function App() {
             onClick={(e) => handleClick(e.currentTarget.id)}
           >
             {letter}
-          </button>
+          </motion.button>
         ))}
       </div>
       <div className={win || lose ? 'restart-div' : 'restart-div-hide'}>
