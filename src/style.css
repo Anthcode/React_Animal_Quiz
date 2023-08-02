@@ -17,6 +17,7 @@ body {
   background: linear-gradient(to left bottom, #039be5, #01579b);
   font-family: "Teko";
   font-size: 2em;
+  overflow: hidden;
 }
 
 #root {
