@@ -16,11 +16,6 @@ export default function App() {
   let win = passwd.split('').every((letter) => quessedLetters.includes(letter));
   let lose = lives === 0;
 
-  const spring = {
-    type: 'spring',
-    damping: 10,
-    stiffness: 260,
-  };
 
   useEffect(() => {
     localStorage.setItem('highScores', JSON.stringify(highScores));
@@ -72,6 +67,13 @@ export default function App() {
     setQuessedLetters([]);
     setReset(!reset);
   };
+
+
+  const spring = {
+    type: 'spring',
+    damping: 15,
+    stiffness: 260,
+  };
   return (
     <motion.div
       className="App"
@@ -85,7 +87,7 @@ export default function App() {
       <motion.h1
         initial={{ y: '-100vh', opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={(spring, { duration: 1.1 })}
+        transition={spring}
       >
         Animal Name Quiz
       </motion.h1>
@@ -94,7 +96,7 @@ export default function App() {
           className="span-lives"
           initial={{ x: '-100vw', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={(spring, { duration: 1.3, delay: 0.2 })}
+          transition={spring, { duration: 1.3, delay: 0.2 }}
         >
           Lives : <span className="lives-num">{lives}</span>
         </motion.span>
@@ -102,7 +104,7 @@ export default function App() {
           className="span-lives"
           initial={{ x: '100vw', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={(spring, { duration: 1.3, delay: 0.2 })}
+          transition={spring, { duration: 1.3, delay: 0.2 }}
         >
           Score : <span className="score-num">{scoreCount}</span>
         </motion.span>
@@ -132,7 +134,6 @@ export default function App() {
       <div className={win || lose ? 'alphabet-hide' : 'alphabet'}>
         {ALPHABET.map((letter, idx) => (
           <motion.button
-           
             initial={{ x: '100vw', opacity: 0, scale: 0, y: '-100vh' }}
             animate={{ x: 0, y: 0, opacity: 1, scale: 1 }}
             transition={{ duration: idx * 0.1 }}
