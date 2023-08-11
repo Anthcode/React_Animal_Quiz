@@ -122,7 +122,7 @@ export default function App() {
                 opacity: quessedLetters.includes(letter) || lose ? 1 : 0,
                 color:
                   !quessedLetters.includes(letter) && lose
-                    ? 'firebrick'
+                    ? 'yellow'
                     : 'black',
               }}
             >
@@ -135,10 +135,10 @@ export default function App() {
         {ALPHABET.map((letter, idx) =>
          (
           <motion.button
-            initial={{ x: '100vw', opacity: 0, scale: 0, y: '-100vh',rotate:180 }}
+            initial={{ x: '50vw', opacity: 0, scale: 0, y: '-120vh',rotate:180*idx }}
             animate={{ x: 0, y: 0, opacity: 1, scale: 1, rotate:0 }}
-           transition={{ delay: idx * 0.1 ,duration: (Math.random()*2)+1 }}
-          // transition={{ duration: (Math.random()*2)+1 }}
+            transition={{ delay: idx * 0.1 ,duration: (Math.random()*2)+1 }}
+          
             className={
               quessedLetters.includes(letter)
                 ? 'btn-alphabet-quest'
