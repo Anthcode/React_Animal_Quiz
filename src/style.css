@@ -104,6 +104,12 @@ h2 {
 .btn-alphabet:active {
   scale: 0.9;
 }
+.btn-letter{
+  border: none;
+  background-color: inherit;
+  width: 20px;
+  height: 20px;
+}
 
 .btn-alphabet {
   margin: 2px;
