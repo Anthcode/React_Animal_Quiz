@@ -135,9 +135,9 @@ export default function App() {
         {ALPHABET.map((letter, idx) =>
          (
           <motion.button
-            initial={{ x: '50vw', opacity: 0, scale: 0, y: '-120vh',rotate:360*idx }}
+            initial={{ x: '50vw', opacity: 0, scale: 0, y: '-120vh',rotate:180*idx }}
             animate={{ x: 0, y: 0, opacity: 1, scale: 1, rotate:0 }}
-            transition={{ delay: idx * 0.07 ,duration: (Math.random()*2)+1 }}
+            transition={{ delay: idx * 0.1 ,duration: (Math.random()*2)+1 }}
           
             className={
               quessedLetters.includes(letter)
@@ -145,10 +145,10 @@ export default function App() {
                 : 'btn-alphabet'
             }
             disabled={
-              quessedLetters.includes(letter) ||
+              (quessedLetters.includes(letter) ||
               bad.includes(letter) ||
               win ||
-              lose
+              lose)
                 ? 'disabled'
                 : null
             }
@@ -161,6 +161,14 @@ export default function App() {
              animate={{ rotate:0, scale:1 }}
              whileTap={{ scale:1.1,rotate: 360, transition: { duration: 0.2 } }}
              className={'btn-letter'}
+             disabled={
+              (
+              bad.includes(letter) ||
+              win ||
+              lose)
+                ? 'disabled'
+                : null
+            }
             >
               {letter}
             </motion.button>
