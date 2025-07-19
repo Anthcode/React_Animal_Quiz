@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import './style.css';
 import { ANIMAL_LIST, ALPHABET } from '../src/db/db';
+import LandingPage from './LandingPage';
 
 export default function App() {
+  const [showLanding, setShowLanding] = useState(true);
   const [quessedLetters, setQuessedLetters] = useState([]);
   const [bad, setBad] = useState([]);
   const [lives, setLives] = useState(6);
@@ -68,12 +70,25 @@ export default function App() {
     setReset(!reset);
   };
 
+  const startGame = () => {
+    setShowLanding(false);
+  };
+
+  const backToLanding = () => {
+    setShowLanding(true);
+    restart();
+  };
+
 
   const spring = {
     type: 'spring',
     damping: 15,
     stiffness: 260,
   };
+  if (showLanding) {
+    return <LandingPage onStartGame={startGame} />;
+  }
+
   return (
     <motion.div
       className="App"
@@ -84,13 +99,23 @@ export default function App() {
       {highScores && (
         <div className="lastBestScore">Your Best Score : {highScores}</div>
       )}
-      <motion.h1
-        initial={{ y: '-100vh', opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={spring}
-      >
-        Animal Name Quiz
-      </motion.h1>
+      <motion.div className="game-header">
+        <motion.button
+          className="back-to-landing-btn"
+          onClick={backToLanding}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          ← Back to Menu
+        </motion.button>
+        <motion.h1
+          initial={{ y: '-100vh', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={spring}
+        >
+          Animal Name Quiz
+        </motion.h1>
+      </motion.div>
       <div className="lives">
         <motion.span
           className="span-lives"
