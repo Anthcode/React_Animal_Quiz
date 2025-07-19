@@ -170,10 +170,10 @@ export default function App() {
                 : 'btn-alphabet'
             }
             disabled={
-              quessedLetters.includes(letter) ||
+              (quessedLetters.includes(letter) ||
               bad.includes(letter) ||
               win ||
-              lose
+              lose)
                 ? 'disabled'
                 : null
             }
@@ -181,7 +181,22 @@ export default function App() {
             id={letter}
             onClick={(e) => handleClick(e.currentTarget.id)}
           >
-            {letter}
+            <motion.button
+    
+             animate={{ rotate:0, scale:1 }}
+             whileTap={{ scale:1.1,rotate: 360, transition: { duration: 0.2 } }}
+             className={'btn-letter'}
+             disabled={
+              (
+              bad.includes(letter) ||
+              win ||
+              lose)
+                ? 'disabled'
+                : null
+            }
+            >
+              {letter}
+            </motion.button>
           </motion.button>
         ))}
       </div>

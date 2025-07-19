@@ -15,7 +15,7 @@ body {
   justify-content: center;
   align-items: center;
   background: linear-gradient(to left bottom, #039be5, #01579b);
-  font-family: "Teko";
+  font-family: 'Teko';
   font-size: 2em;
   overflow: hidden;
 }
@@ -29,7 +29,11 @@ body {
 }
 
 .App {
-  background: linear-gradient(to right top, rgba(128, 128, 128, 0.966), rgba(78, 78, 78, 0.644));
+  background: linear-gradient(
+    to right top,
+    rgba(128, 128, 128, 0.966),
+    rgba(78, 78, 78, 0.644)
+  );
   margin: 18px;
   width: 440px;
   min-width: 340px;
@@ -103,6 +107,14 @@ h2 {
 
 .btn-alphabet:active {
   scale: 0.9;
+}
+.btn-letter {
+  border: none;
+  background-color: inherit;
+  width: 20px;
+  height: 20px;
+  align-self: center;
+  padding: 2px 2px;
 }
 
 .btn-alphabet {
